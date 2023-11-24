@@ -3,6 +3,7 @@
   "collectCoverage": true,
   "collectCoverageFrom": [
     "**/*.js",
+    "!**/cli-tools/*",
     "!**/*.config.js",
     "!**/*.spec.js",
     "!**/lcov-report/*",

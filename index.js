@@ -1,9 +1,22 @@
 const Express = require('express')
+const expressWinston = require('express-winston')
 const helmet = require('helmet')
+const config = require('config')
+const { getLogger } = require('./services/logger')
 const { resolve, join } = require('node:path')
 const { registerRoutes } = require('./routes')
 
+const logger = getLogger('index.js')
+
 function bootstrap (app) {
+  logger.info('Starting app')
+
+  app.use(
+    expressWinston.logger({
+      winstonInstance: logger
+    })
+  )
+
   app.use(Express.static('public'))
   app.use(
     '/bootstrap',
@@ -16,9 +29,9 @@ function bootstrap (app) {
   }
 
   registerRoutes(app)
-
-  app.listen(3000, () => {
-    console.log('Example app listening on port 3000')
+  const port = config.get('server.port')
+  app.listen(port, () => {
+    logger.info(`App listening on port ${port}`)
   })
 }
 
