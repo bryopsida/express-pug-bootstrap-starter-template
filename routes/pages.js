@@ -9,12 +9,6 @@ const logger = getLogger('routes/pages.js')
 
 module.exports = {
   registerPageRoutes: function registerPageRoutes (app) {
-    app.get('/', (req, res) => {
-      res.render('index', { title: 'Home', message: 'Hello there!' })
-    })
-    app.get('/about', (req, res) => {
-      res.render('about', { title: 'About', message: 'About' })
-    })
     app.get('/login', (req, res) => {
       res.render('login', {
         title: 'Login',
@@ -41,6 +35,15 @@ module.exports = {
         logger.error('Error while logging in', err)
         res.render('login', { title: 'Login Failed', loginError: true })
       }
+    })
+    app.get('/', (req, res) => {
+      res.render('index', {
+        title: 'Home',
+        message: `Hello ${req.user.username}`
+      })
+    })
+    app.get('/about', (req, res) => {
+      res.render('about', { title: 'About', message: 'About' })
     })
   }
 }

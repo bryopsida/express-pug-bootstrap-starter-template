@@ -69,6 +69,14 @@ async function createSession (req, res, user) {
   await session.save()
 }
 
+function getSession (req, res) {
+  return getIronSession(req, res, {
+    password,
+    cookieName,
+    cookieOptions
+  })
+}
+
 async function deleteSession (req, res) {
   const session = await getIronSession(req, res, {
     password,
@@ -89,5 +97,6 @@ module.exports = {
   authenticate,
   createSession,
   deleteSession,
+  getSession,
   logout
 }
