@@ -7,5 +7,12 @@
     "!**/*.spec.js",
     "!**/lcov-report/*",
     "!**/node_modules/**"
-  ]
+  ],
+  "coverageThreshold": {
+    "global": {
+      "branches": 50,
+      "functions": 40,
+      "lines": 70
+    }
+  }
 }
