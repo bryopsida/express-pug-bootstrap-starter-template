@@ -2,6 +2,8 @@ const Express = require('express')
 const expressWinston = require('express-winston')
 const helmet = require('helmet')
 const config = require('config')
+const bodyParser = require('body-parser')
+
 const { getLogger } = require('./services/logger')
 const { resolve, join } = require('node:path')
 const { registerRoutes } = require('./routes')
@@ -23,6 +25,11 @@ function bootstrap (app) {
     Express.static(resolve(join('node_modules', 'bootstrap', 'dist')))
   )
   app.set('view engine', 'pug')
+  // parse application/x-www-form-urlencoded
+  app.use(bodyParser.urlencoded({ extended: false }))
+
+  // parse application/json
+  app.use(bodyParser.json())
 
   if (process.env.NODE_ENV === 'production') {
     app.use(helmet())

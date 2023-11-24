@@ -1,3 +1,18 @@
 extends layouts/main-layout.pug
 block content
-    div.container= message
+    br
+    form.container(action='login' method='POST')
+        div.row
+            label.form-label(for='username') Username
+            input(class=(loginError == false ? 'form-control' : 'form-control  is-invalid') type='text' placeholder='User' aria-label='User' name='username' required)
+            if loginError
+                div.invalid-feedback(id='usernameFeedback') Please provide a valid username for the password
+        br
+        div.row
+            label.form-label(for='password') Password
+            input(class=(loginError == false ? 'form-control' : 'form-control  is-invalid') type='password' placeholder='Password' aria-label='Password' name='password' required)
+            if loginError
+                div.invalid-feedback(id='passwordFeedback') Please provide a valid password for the username
+        br
+        div.row
+            input.btn.btn-primary(type='submit' value='Login' aria-label='Login')

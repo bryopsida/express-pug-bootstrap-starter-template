@@ -30,6 +30,7 @@ async function authenticate (user, password) {
   } else {
     dualLog('warn', `Failed authentication attempt for user ${user}`)
   }
+  return result
 }
 
 module.exports = {
