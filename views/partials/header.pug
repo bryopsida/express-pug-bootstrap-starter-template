@@ -1,0 +1,25 @@
+header
+    nav.navbar.navbar-expand-lg.bg-body-tertiary
+        .container-fluid
+            a.navbar-brand(href="#") Navbar
+            button.navbar-toggler(
+                aria-label="Toggle navigation" 
+                aria-expanded="false" 
+                aria-controls="navbarNav" 
+                data-bs-target="#navbarNav" 
+                data-bs-toggle="collapse" 
+                type="button"
+            )
+                span.navbar-toggler-icon
+            #navbarNav.collapse.navbar-collapse
+                ul.navbar-nav
+                    li.nav-item
+                        a.nav-link.active(
+                            href="/" 
+                            aria-current="page"
+                            ) Home
+                    li.nav-item
+                        a.nav-link(
+                            href="/about" 
+                            aria-current="page"
+                            ) About
