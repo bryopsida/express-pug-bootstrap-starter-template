@@ -1,5 +1,8 @@
 {
   "server": {
     "port": "PORT"
+  },
+  "authentication": {
+    "cookiePassword": "COOKIE_PASSWORD"
   }
 }

@@ -1,9 +1,33 @@
 const argon2 = require('argon2')
+const config = require('config')
+
+const { getIronSession } = require('iron-session')
 const { getUser } = require('./users')
 const { getLogger, getAuditLogger } = require('./logger')
 
+const DEFAULT_PASSWORD = '16662956379127212881668216927771'
 const logger = getLogger('authentication.js')
 const audit = getAuditLogger('authentication.js')
+const password = config.get('authentication.cookiePassword')
+const cookieName = config.get('authentication.cookieName')
+const cookieOptions = {
+  secure: process.env.NODE_ENV === 'production'
+}
+
+if (
+  password === DEFAULT_PASSWORD &&
+  process.env.NODE_ENV === 'production' &&
+  process.env.ALLOW_DEFAULT_COOKIE !== 'true'
+) {
+  throw new Error(
+    'The cookie password was not changed from default and NODE_ENV is production!'
+  )
+}
+if (password === DEFAULT_PASSWORD) {
+  console.warn(
+    'The cookie password has been left default, this is not secure and should never be done in a prod environment!'
+  )
+}
 
 function dualLog (level, msg) {
   logger[level](msg)
@@ -33,8 +57,37 @@ async function authenticate (user, password) {
   return result
 }
 
+async function createSession (req, res, user) {
+  const session = await getIronSession(req, res, {
+    password,
+    cookieName,
+    cookieOptions
+  })
+  dualLog('info', `Creating session for ${user}`)
+  session.username = user
+  session.authenticated = true
+  await session.save()
+}
+
+async function deleteSession (req, res) {
+  const session = await getIronSession(req, res, {
+    password,
+    cookieName,
+    cookieOptions
+  })
+  dualLog('info', `Destroying session for ${session.username}`)
+  session.destroy()
+}
+
+function logout (req, res) {
+  return deleteSession(req, res)
+}
+
 module.exports = {
   hashPassword,
   verifyPassword,
-  authenticate
+  authenticate,
+  createSession,
+  deleteSession,
+  logout
 }

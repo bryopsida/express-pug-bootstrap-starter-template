@@ -1,5 +1,9 @@
 {
   "server": {
     "port": 3000
+  },
+  "authentication": {
+    "cookiePassword": "16662956379127212881668216927771",
+    "cookieName": "express-pug-starter-auth"
   }
 }

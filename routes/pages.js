@@ -1,4 +1,8 @@
-const { authenticate } = require('../services/authentication')
+const {
+  authenticate,
+  createSession,
+  logout
+} = require('../services/authentication')
 const { getLogger } = require('../services/logger')
 
 const logger = getLogger('routes/pages.js')
@@ -26,9 +30,12 @@ module.exports = {
       try {
         const result = await authenticate(req.body.username, req.body.password)
         if (!result) {
+          await logout(req, res)
           res.render('login', { title: 'Login Failed', loginError: true })
         } else {
-          res.render('login', { title: 'Login', loginError: false })
+          // user authenticated lets get the session object and persist it to their cookie
+          await createSession(req, res, req.body.username)
+          res.redirect('/')
         }
       } catch (err) {
         logger.error('Error while logging in', err)
