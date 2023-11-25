@@ -6,6 +6,7 @@ describe('index.js', () => {
     const app = {
       use: jest.fn(() => {}),
       get: jest.fn(() => {}),
+      post: jest.fn(() => {}),
       listen: jest.fn(() => {}),
       set: jest.fn(() => {})
     }

@@ -7,6 +7,8 @@ const bodyParser = require('body-parser')
 const { getLogger } = require('./services/logger')
 const { resolve, join } = require('node:path')
 const { registerRoutes } = require('./routes')
+const { authorizationService } = require('./services/authorization')
+const { getSession } = require('./services/authentication')
 const sessionMiddleware = require('./middleware/session')
 const authorizationMiddleware = require('./middleware/authorization')
 
@@ -37,8 +39,16 @@ function bootstrap (app) {
     app.use(helmet())
   }
 
-  app.use(sessionMiddleware())
-  app.use(authorizationMiddleware())
+  app.use(
+    sessionMiddleware({
+      getSession
+    })
+  )
+  app.use(
+    authorizationMiddleware({
+      authorizationService
+    })
+  )
 
   registerRoutes(app)
   const port = config.get('server.port')

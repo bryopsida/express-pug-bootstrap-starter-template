@@ -12,7 +12,11 @@ const authenticatedAbility = defineAbility((can) => {
 
 class AuthorizationService {
   isAllowed (req) {
+    if (req.user == null) {
+      req.user = {}
+    }
     const user = req.user
+
     const ability =
       user.username == null ? unauthenticatedAbility : authenticatedAbility
     const isAllowed = ability.can('visit', req.originalUrl)
