@@ -8,6 +8,7 @@ const { getLogger } = require('./services/logger')
 const { resolve, join } = require('node:path')
 const { registerRoutes } = require('./routes')
 const sessionMiddleware = require('./middleware/session')
+const authorizationMiddleware = require('./middleware/authorization')
 
 const logger = getLogger('index.js')
 
@@ -37,6 +38,7 @@ function bootstrap (app) {
   }
 
   app.use(sessionMiddleware())
+  app.use(authorizationMiddleware())
 
   registerRoutes(app)
   const port = config.get('server.port')
