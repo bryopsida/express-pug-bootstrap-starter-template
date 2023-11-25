@@ -4,6 +4,14 @@ const {
   logout
 } = require('../services/authentication')
 const { getLogger } = require('../services/logger')
+const { rateLimit } = require('express-rate-limit')
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false
+})
 
 const logger = getLogger('routes/pages.js')
 
@@ -16,7 +24,7 @@ module.exports = {
         loginError: false
       })
     })
-    app.post('/login', async (req, res) => {
+    app.post('/login', limiter, async (req, res) => {
       // a post means credentials are passed, try to authenticate
       // if all goes well set their session and redirect either to /
       // or extract last location from their standard cookie
