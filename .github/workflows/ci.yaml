@@ -20,11 +20,11 @@ jobs:
         run: npm run lint
       - name: Unit Tests
         run: npm test
-  playwright:
+  e2e:
     needs:
       - validate
     timeout-minutes: 60
-    name: 'Playwright Tests'
+    name: 'E2E Tests'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
