@@ -1,3 +1,11 @@
 extends layouts/main-layout.pug
 block content
-    div.container= message
+    div.container-fluid.align-items-center.justify-content-center
+        each cardRow in cardRows
+            div.row.gx-5.align-items-center.justify-content-center
+                each row in cardRow
+                    div.col-sm-2.gy-5.align-items-center.justify-content-center
+                        div.card
+                            div.card-body
+                                h5.card-title #{row.title}
+                                p.card-text #{row.description}

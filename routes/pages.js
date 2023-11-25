@@ -15,6 +15,21 @@ const limiter = rateLimit({
 
 const logger = getLogger('routes/pages.js')
 
+function buildCardRows () {
+  const rows = []
+  for (let i = 0; i < 5; i++) {
+    const row = []
+    for (let j = 0; j < 5; j++) {
+      row.push({
+        title: `Row ${i} Card ${j}`,
+        description: `Row ${i} Description ${j}`
+      })
+    }
+    rows.push(row)
+  }
+  return rows
+}
+
 module.exports = {
   registerPageRoutes: function registerPageRoutes (app) {
     app.get('/login', (req, res) => {
@@ -47,7 +62,7 @@ module.exports = {
     app.get('/', (req, res) => {
       res.render('index', {
         title: 'Home',
-        message: `Hello ${req.user.username}`
+        cardRows: buildCardRows()
       })
     })
     app.get('/about', (req, res) => {
