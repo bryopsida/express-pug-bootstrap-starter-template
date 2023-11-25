@@ -8,7 +8,7 @@ This is a basic starter template for a web app. It's intended use case is for si
 
 ## Getting Started
 
-To launch the app, run `npm start`, and navigate [here](http://localhost:3000/), to login use `admin:admin`.
+To launch the app, install the dependencies `npm install`, and then run `npm start`, and navigate [here](http://localhost:3000/), to login use `admin:admin`.
 
 If you wish to make a change, follow the above directions, expect instead of running `npm start`, run `npm run dev`. On save of your JavaScript files the server will automatically reload with the new changes.
 
