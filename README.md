@@ -2,6 +2,10 @@
 
 This is a basic starter template for a web app. It's intended use case is for simple things that do not warrant using a SPA or other heavier client side frameworks. It opts for a very simple dev loop, no building/compiling, simply edit the files and the changes are live.
 
+## Pre-Requisites
+
+- Node.JS >= 20
+
 ## Getting Started
 
 To launch the app, run `npm start`, and navigate [here](http://localhost:3000/), to login use `admin:admin`.
@@ -19,9 +23,9 @@ If you wish to make a change, follow the above directions, expect instead of run
 7. [Playwright](https://www.npmjs.com/package/playwright) - used for e2e tests
 8. [Iron-session](https://www.npmjs.com/package/iron-session) - used for stateless auth using cookies
 9. [Bootstrap](https://www.npmjs.com/package/bootstrap) - used for client styling and components
-10. [Standard.JS](https://www.npmjs.com/package/standard) linting rules
-11. [Prettier](https://www.npmjs.com/package/prettier) for formatting files
-12. [Config](https://www.npmjs.com/package/config) for providing configuration system
+10. [Standard.JS](https://www.npmjs.com/package/standard) - linting rules
+11. [Prettier](https://www.npmjs.com/package/prettier) - for formatting files
+12. [Config](https://www.npmjs.com/package/config) - for providing configuration system
 
 ## NPM Scripts
 
