@@ -5,11 +5,9 @@ html(lang="en")
         link(rel='stylesheet' href='bootstrap/css/bootstrap.min.css')
         link(rel='stylesheet' href='bootstrap/css/bootstrap-reboot.min.css')
         link(rel='stylesheet' href='global.css')
-
-        script(src='bootstrap/js/bootstrap.bundle.min.js')
-
         title #{ title }
     body
         include ../partials/header.pug
         block content
         include ../partials/footer.pug
+        script(src='bootstrap/js/bootstrap.bundle.min.js')

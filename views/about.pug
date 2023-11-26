@@ -1,3 +1,11 @@
 extends layouts/main-layout.pug
 block content
-    div.container= message
+    div.container-fluid.gx-5.gy-5
+        br
+        div.accordion(id='aboutAccordion')
+            each item in items
+                div.accordion-item
+                    h2.accordion-header(id='heading'+item.id)
+                        button.accordion-button.collapsed(type='button' data-bs-toggle='collapse' data-bs-target='#collapse' + item.id aria-expanded="false" aria-controls="collapse" + item.id) Button
+                    div.accordion-collapse.collapse(id='collapse' + item.id aria-labelledby='heading' + item.id data-bs-parent='#aboutAccordion')
+                        div.accordion-body #{item.content}

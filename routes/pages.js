@@ -30,6 +30,19 @@ function buildCardRows () {
   return rows
 }
 
+function buildAboutItems () {
+  const items = []
+  for (let i = 0; i < 5; i++) {
+    const item = {
+      title: `Item ${i}`,
+      content: `Item ${i} content`,
+      id: i
+    }
+    items.push(item)
+  }
+  return items
+}
+
 module.exports = {
   registerPageRoutes: function registerPageRoutes (app) {
     app.get('/login', (req, res) => {
@@ -66,7 +79,7 @@ module.exports = {
       })
     })
     app.get('/about', (req, res) => {
-      res.render('about', { title: 'About', message: 'About' })
+      res.render('about', { title: 'About', items: buildAboutItems() })
     })
   }
 }
