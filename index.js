@@ -11,6 +11,7 @@ const { authorizationService } = require('./services/authorization')
 const { getSession } = require('./services/authentication')
 const sessionMiddleware = require('./middleware/session')
 const authorizationMiddleware = require('./middleware/authorization')
+const errorHandler = require('./middleware/error')
 
 const logger = getLogger('index.js')
 
@@ -55,6 +56,7 @@ function bootstrap (app) {
   )
 
   registerRoutes(app)
+  app.use(errorHandler())
   const port = config.get('server.port')
   app.listen(port, () => {
     logger.info(`App listening on port ${port}`)

@@ -10,7 +10,8 @@ const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 10,
   standardHeaders: true,
-  legacyHeaders: false
+  legacyHeaders: false,
+  handler: (req, res, next, options) => res.render('429')
 })
 
 const logger = getLogger('routes/pages.js')
@@ -49,7 +50,7 @@ module.exports = {
       await logout(req, res)
       res.redirect('/login')
     })
-    app.get('/login', (req, res) => {
+    app.get('/login', limiter, (req, res) => {
       res.render('login', {
         title: 'Login',
         message: 'Login',
