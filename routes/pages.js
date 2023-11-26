@@ -45,6 +45,10 @@ function buildAboutItems () {
 
 module.exports = {
   registerPageRoutes: function registerPageRoutes (app) {
+    app.get('/logout', async (req, res) => {
+      await logout(req, res)
+      res.redirect('/login')
+    })
     app.get('/login', (req, res) => {
       res.render('login', {
         title: 'Login',
@@ -74,12 +78,17 @@ module.exports = {
     })
     app.get('/', (req, res) => {
       res.render('index', {
+        user: req.user,
         title: 'Home',
         cardRows: buildCardRows()
       })
     })
     app.get('/about', (req, res) => {
-      res.render('about', { title: 'About', items: buildAboutItems() })
+      res.render('about', {
+        user: req.user,
+        title: 'About',
+        items: buildAboutItems()
+      })
     })
   }
 }

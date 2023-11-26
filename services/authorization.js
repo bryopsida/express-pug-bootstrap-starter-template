@@ -6,6 +6,7 @@ const unauthenticatedAbility = defineAbility((can) => {
 
 const authenticatedAbility = defineAbility((can) => {
   can('visit', '/login')
+  can('visit', '/logout')
   can('visit', '/')
   can('visit', '/about')
 })

@@ -1,6 +1,6 @@
 header
     nav.navbar.navbar-expand-lg.bg-body-tertiary
-        .container-fluid
+        div.container-fluid
             a.navbar-brand(href="#") Navbar
             button.navbar-toggler(
                 aria-label="Toggle navigation" 
@@ -11,15 +11,27 @@ header
                 type="button"
             )
                 span.navbar-toggler-icon
-            #navbarNav.collapse.navbar-collapse
-                ul.navbar-nav
-                    li.nav-item
-                        a.nav-link.active(
-                            href="/" 
-                            aria-current="page"
-                            ) Home
-                    li.nav-item
-                        a.nav-link(
-                            href="/about" 
-                            aria-current="page"
-                            ) About
+            div#navbarNav.collapse.navbar-collapse
+                ul.navbar-nav.me-auto.mb-2.mb-lg-0
+                    if user
+                        li.nav-item
+                            a.nav-link.active(
+                                href="/" 
+                                aria-current="page"
+                                ) Home
+                        li.nav-item
+                            a.nav-link(
+                                href="/about" 
+                                aria-current="page"
+                                ) About
+                        li.nav-item.dropdown.d-flex
+                            a.nav-link.dropdown-toggle(href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false')
+                                i.bi.bi-person-circle
+                            ul.dropdown-menu
+                                li
+                                    a.dropdown-item(href='/logout')
+                                        div.row
+                                            div.col Logout
+                                            div.col
+                                                i.bi.bi-door-closed
+                                    

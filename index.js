@@ -28,6 +28,10 @@ function bootstrap (app) {
     '/bootstrap',
     Express.static(resolve(join('node_modules', 'bootstrap', 'dist')))
   )
+  app.use(
+    '/bootstrap-icons',
+    Express.static(resolve(join('node_modules', 'bootstrap-icons', 'font')))
+  )
   app.set('view engine', 'pug')
   // parse application/x-www-form-urlencoded
   app.use(bodyParser.urlencoded({ extended: false }))
