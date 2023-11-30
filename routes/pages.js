@@ -5,6 +5,7 @@ const {
 } = require('../services/authentication')
 const { getLogger } = require('../services/logger')
 const { rateLimit } = require('express-rate-limit')
+const { getUser } = require('../services/users')
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -69,7 +70,8 @@ module.exports = {
           res.render('login', { title: 'Login Failed', loginError: true })
         } else {
           // user authenticated lets get the session object and persist it to their cookie
-          await createSession(req, res, req.body.username)
+          const user = await getUser(req.body.username)
+          await createSession(req, res, user)
           res.redirect('/')
         }
       } catch (err) {

@@ -63,8 +63,9 @@ async function createSession (req, res, user) {
     cookieName,
     cookieOptions
   })
-  dualLog('info', `Creating session for ${user}`)
-  session.username = user
+  dualLog('info', `Creating session for ${user.username}`)
+  session.username = user.username
+  session.role = user.role
   session.authenticated = true
   await session.save()
 }
