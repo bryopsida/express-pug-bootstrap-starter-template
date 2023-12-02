@@ -1,5 +1,14 @@
 const users = require('./users.json')
 
+function fromDB (user) {
+  return {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    role: user.role
+  }
+}
+
 function toDTO (user) {
   return {
     firstName: user.firstName,

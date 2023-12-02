@@ -1,4 +1,7 @@
 {
+  "db": {
+    "path": "DB_PATH"
+  },
   "server": {
     "port": "PORT"
   },
