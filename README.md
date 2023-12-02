@@ -8,7 +8,7 @@ This is a basic starter template for a web app. It's intended use case is for si
 
 ## Getting Started
 
-To launch the app, install the dependencies `npm install`, and then run `npm start`, and navigate [here](http://localhost:3000/), to login use `admin:admin`.
+To launch the app, install the dependencies `npm install`, and then run `npm start`, and navigate [here](http://localhost:3000/), to login check the `./logs/audit.log` for the generated admin password, you can change this afterwards.
 
 If you wish to make a change, follow the above directions, expect instead of running `npm start`, run `npm run dev`. On save of your JavaScript files the server will automatically reload with the new changes.
 
@@ -26,6 +26,9 @@ If you wish to make a change, follow the above directions, expect instead of run
 10. [Standard.JS](https://www.npmjs.com/package/standard) - linting rules
 11. [Prettier](https://www.npmjs.com/package/prettier) - for formatting files
 12. [Config](https://www.npmjs.com/package/config) - for providing configuration system
+13. [Sequelize](https://www.npmjs.com/package/sequelize) - ORM
+14. [Sqlite3](https://www.npmjs.com/package/sqlite3) - Embedded database
+15. [Umzug](https://www.npmjs.com/package/umzug) - Migration and seed runner
 
 ## NPM Scripts
 
@@ -54,6 +57,25 @@ If you wish to make a change, follow the above directions, expect instead of run
 - `config/` - config files and environment variable mapping
 - `tests/` - E2E Tests
 - `views/` - PUG templates
+- `db/` - Database models, migrations and seeds
+
+## Managing DB Models and Migrations
+
+### Create a new model
+
+You can create a new model/table by running `npx sequelize-cli model:generate --name TableName --attributes prop1:string,prop2:string`, this will create a basic migration for you under `./db/migrations` and a new model under `./db/models`.
+
+### Create a new migration
+
+You can create a new migration by running `npx sequelize-cli migration:create --name your-migration-name`
+
+### Create a new seed
+
+You can create a new seed by running `npx sequelize-cli seed:generate --name seed-name`
+
+### Manually running migrations
+
+You can manually run migrations by running `npx sequelize-cli db:migrate`
 
 ## Post template checklist
 
