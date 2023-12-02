@@ -9,6 +9,7 @@ const { resolve, join } = require('node:path')
 const { registerRoutes } = require('./routes')
 const { authorizationService } = require('./services/authorization')
 const { getSession } = require('./services/authentication')
+const { runMigrations } = require('./db/migrations')
 const sessionMiddleware = require('./middleware/session')
 const authorizationMiddleware = require('./middleware/authorization')
 const errorHandler = require('./middleware/error')
@@ -64,8 +65,15 @@ function bootstrap (app) {
 }
 
 if (require.main === module) {
-  const app = new Express()
-  bootstrap(app)
+  runMigrations()
+    .then(() => {
+      const app = new Express()
+      bootstrap(app)
+    })
+    .catch((err) => {
+      logger.error('Error while starting application', err)
+      process.exit(1)
+    })
 }
 
 module.exports = {

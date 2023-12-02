@@ -4,8 +4,7 @@
   },
   "db": {
     "dialect": "sqlite",
-    "storage": "./data/database.sqlite",
-    "seeds": "./db/test-seeds"
+    "storage": ":memory:"
   },
   "authentication": {
     "cookiePassword": "35939596721730745268234159437160",

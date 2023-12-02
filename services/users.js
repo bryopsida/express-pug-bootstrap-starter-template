@@ -1,12 +1,16 @@
 const db = require('../db/db')
 
-function fromDB (user) {
-  return {
+function fromDB (user, includePassword) {
+  const retUser = {
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
-    role: user.role
+    role: user.Role.role
   }
+  if (includePassword) {
+    retUser.password = user.password
+  }
+  return retUser
 }
 
 function toDTO (user) {
@@ -18,14 +22,15 @@ function toDTO (user) {
   }
 }
 
-async function getUser (userId) {
+async function getUser (userId, includePassword) {
   const user = await db.User.findOne({
     where: {
       username: userId
-    }
+    },
+    include: db.Role
   })
   if (user == null) return null
-  return fromDB(user)
+  return fromDB(user, includePassword)
 }
 
 async function getUsers (offset, count) {

@@ -43,12 +43,12 @@ function verifyPassword (password, hash) {
 }
 
 async function authenticate (user, password) {
-  const userObj = getUser(user)
+  const userObj = await getUser(user, true)
   if (userObj == null) throw new Error(`User ${user} does not exist!`)
-  if (userObj.passwordHash == null) {
+  if (userObj.password == null) {
     throw new Error(`User ${user} does not have a password!`)
   }
-  const result = await verifyPassword(password, userObj.passwordHash)
+  const result = await verifyPassword(password, userObj.password)
   if (result) {
     dualLog('info', `User ${user} successfully authenticated`)
   } else {
