@@ -9,15 +9,6 @@ const {
 } = require('./authentication')
 const { getMockReq, getMockRes } = require('@jest-mock/express')
 
-jest.mock('./users.json', () => {
-  return {
-    test: {
-      passwordHash:
-        '$argon2id$v=19$m=65536,t=3,p=4$Lu5V3Fa6uQPccsgRmEwvqw$hKft7/KVtsVbSsfv3UOtCfkxq9N/y9XddP4VAC2po4w'
-    }
-  }
-})
-
 describe('services/authentication.js', () => {
   describe('hashPassword()', () => {
     it('should hash a password that can be verified', async () => {

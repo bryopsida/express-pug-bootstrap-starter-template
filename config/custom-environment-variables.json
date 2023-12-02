@@ -1,6 +1,7 @@
 {
   "db": {
-    "path": "DB_PATH"
+    "dialect": "DB_DIALECT",
+    "storage": "DB_STORAGE"
   },
   "server": {
     "port": "PORT"

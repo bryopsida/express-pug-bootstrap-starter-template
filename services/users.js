@@ -1,4 +1,4 @@
-const users = require('./users.json')
+const db = require('../db/db')
 
 function fromDB (user) {
   return {
@@ -18,18 +18,26 @@ function toDTO (user) {
   }
 }
 
-function getUser (userId) {
-  return users[userId]
+async function getUser (userId) {
+  const user = await db.User.findOne({
+    where: {
+      username: userId
+    }
+  })
+  if (user == null) return null
+  return fromDB(user)
 }
 
-function getUsers (offset, count) {
-  const keys = Object.keys(users)
-  const selectedKeys = keys.slice(offset, count)
-  return Promise.resolve(selectedKeys.map((k) => toDTO(users[k])))
+async function getUsers (offset, count) {
+  const users = await db.User.findAll({
+    offset,
+    limit: count
+  })
+  return users.map(fromDB)
 }
 
 function getUserCount () {
-  return Promise.resolve(Object.keys(users).length)
+  return db.User.count()
 }
 
 module.exports = {

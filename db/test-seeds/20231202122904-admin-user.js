@@ -20,18 +20,16 @@ module.exports = {
       password = randomBytes(16).toString('hex')
       dualLog(`Generated a random admin password ${password}, change it ASAP!`)
     }
-    await queryInterface.bulkInsert('Users', [
-      {
-        firstName: 'admin',
-        lastName: 'admin',
-        email: 'admin@localhost',
-        username: 'admin',
-        roleId: 0,
-        password: await hashPassword(password),
-        createdAt: new Date(),
-        updatedAt: new Date()
-      }
-    ])
+    await queryInterface.insert(null, 'Users', {
+      firstName: 'admin',
+      lastName: 'admin',
+      email: 'admin@localhost',
+      username: 'admin',
+      roleId: 0,
+      password: await hashPassword(password),
+      createdAt: new Date(),
+      updatedAt: new Date()
+    })
   },
 
   async down (queryInterface, Sequelize) {

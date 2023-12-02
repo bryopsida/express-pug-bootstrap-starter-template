@@ -3,7 +3,9 @@
     "port": 3000
   },
   "db": {
-    "path": "./data"
+    "dialect": "sqlite",
+    "storage": "./data/database.sqlite",
+    "seeds": "./db/seeds"
   },
   "authentication": {
     "cookiePassword": "16662956379127212881668216927771",
