@@ -1,3 +1,4 @@
+const { rateLimit } = require('express-rate-limit')
 const { authenticate, hashPassword } = require('../../services/authentication')
 const { getAuditLogger } = require('../../services/logger')
 const { getUser, updatePassword } = require('../../services/users')
