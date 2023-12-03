@@ -32,6 +32,12 @@ async function saveUser (userObj) {
   await modelInstance.save()
 }
 
+async function updatePassword (username, hash) {
+  const modelInstance = await db.User.findOne({ username })
+  modelInstance.password = hash
+  await modelInstance.save()
+}
+
 async function getUser (userId, includePassword) {
   const user = await db.User.findOne({
     where: {
@@ -61,5 +67,6 @@ module.exports = {
   getUsers,
   getUserCount,
   toDTO,
-  saveUser
+  saveUser,
+  updatePassword
 }

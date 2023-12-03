@@ -12,6 +12,8 @@ function defineAuthenticatedAbilities (can) {
   can('get', '/')
   can('get', '/about')
   can('get', '/api/users')
+  can('get', '/change-password')
+  can('post', '/change-password')
 }
 
 const authenticatedAbility = defineAbility((can) => {
