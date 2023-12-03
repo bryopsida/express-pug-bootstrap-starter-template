@@ -5,7 +5,7 @@ const {
 } = require('../services/authentication')
 const { getLogger } = require('../services/logger')
 const { rateLimit } = require('express-rate-limit')
-const { getUser, getUsers } = require('../services/users')
+const { getUser, getUsers, saveUser } = require('../services/users')
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -93,6 +93,7 @@ module.exports = {
         items: buildAboutItems()
       })
     })
+
     app.get('/users', async (req, res) => {
       const offset = req.query.offset < 0 ? 0 : req.query.offset
       const count = req.query.count > 100 ? 0 : req.query.count
@@ -102,6 +103,31 @@ module.exports = {
         title: 'Users',
         items: users
       })
+    })
+
+    app.post('/edit-user', async (req, res) => {
+      const username = req.query.username
+      const savedUser = await getUser(username)
+      const updatedUser = req.body
+      savedUser.email = updatedUser.email
+      savedUser.firstName = updatedUser.firstName
+      savedUser.lastName = updatedUser.lastName
+      await saveUser(savedUser)
+      res.redirect('/edit-user?username=' + username)
+    })
+
+    app.get('/edit-user', async (req, res) => {
+      const username = req.query.username
+      const user = await getUser(username)
+      if (user == null) {
+        res.render('404')
+      } else {
+        res.render('edit-user', {
+          user: req.user,
+          title: 'Edit User',
+          item: user
+        })
+      }
     })
   }
 }

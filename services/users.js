@@ -24,6 +24,14 @@ function toDTO (user) {
   }
 }
 
+async function saveUser (userObj) {
+  const modelInstance = await db.User.findOne({ username: userObj.username })
+  modelInstance.firstName = userObj.firstName
+  modelInstance.lastName = userObj.lastName
+  modelInstance.email = userObj.email
+  await modelInstance.save()
+}
+
 async function getUser (userId, includePassword) {
   const user = await db.User.findOne({
     where: {
@@ -52,5 +60,6 @@ module.exports = {
   getUser,
   getUsers,
   getUserCount,
-  toDTO
+  toDTO,
+  saveUser
 }

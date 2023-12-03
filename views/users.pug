@@ -2,17 +2,24 @@ extends layouts/main-layout.pug
 block content
     br
     .container
-        table.table
-            thead
-                tr
-                    th(scope="col") Username
-                    th(scope="col") First Name
-                    th(scope="col") Last Name
-                    th(scope="col") Role
-            tbody
-                each user in items
-                    tr
-                        th(scope="row") #{user.username}
-                        th #{user.firstName}
-                        th #{user.lastName}
-                        th #{user.role}
+        div.card
+            div.card-body
+                table.table
+                    thead
+                        tr
+                            th(scope="col") Username
+                            th(scope="col") First Name
+                            th(scope="col") Last Name
+                            th(scope="col") Role
+                            th(scope="col") Actions
+                    tbody
+                        each user in items
+                            tr
+                                th(scope="row") #{user.username}
+                                th #{user.firstName}
+                                th #{user.lastName}
+                                th #{user.role}
+                                th
+                                    div.btn-group
+                                        a.btn.btn-primary(href='/edit-user?username=' + user.username)
+                                            i.bi.bi-pen-fill(data-bs-toggle="tooltip" data-bs-placement="top" title="Edit " + user.username)
