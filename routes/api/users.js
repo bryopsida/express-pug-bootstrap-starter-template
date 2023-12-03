@@ -16,17 +16,21 @@ module.exports = {
     apiRouter.get(
       '/',
       validator.query(getUsersQuerySchema),
-      async (req, res) => {
+      async (req, res, next) => {
         const offset = req.query.offset
         const count = req.query.count
-        const users = await getUsers(offset, count)
-        const totalCount = await getUserCount()
-        const resp = {
-          offset,
-          totalCount,
-          users
+        try {
+          const users = await getUsers(offset, count)
+          const totalCount = await getUserCount()
+          const resp = {
+            offset,
+            totalCount,
+            users
+          }
+          res.json(resp)
+        } catch (err) {
+          next(err)
         }
-        res.json(resp)
       }
     )
 

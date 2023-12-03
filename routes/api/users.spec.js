@@ -2,11 +2,13 @@ const request = require('supertest')
 const express = require('express')
 const { describe, it, beforeEach } = require('@jest/globals')
 const { registerUserApiRoutes } = require('./users')
+const { runMigrations } = require('../../db/migrations')
 
 describe('routes/api/users.js', () => {
   let app = null
   let agent = null
-  beforeEach(() => {
+  beforeEach(async () => {
+    await runMigrations()
     app = express()
     registerUserApiRoutes(app)
     agent = request.agent(app)

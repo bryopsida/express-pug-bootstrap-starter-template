@@ -1,6 +1,8 @@
 const { Umzug, SequelizeStorage } = require('umzug')
-const { getLogger } = require('../services/logger')
+const { getQueryLogger } = require('../services/logger')
 const db = require('./models')
+
+const logger = getQueryLogger('umzug')
 
 const umzug = new Umzug({
   migrations: {
@@ -16,7 +18,7 @@ const umzug = new Umzug({
   },
   context: db.sequelize.getQueryInterface(),
   storage: new SequelizeStorage({ sequelize: db.sequelize }),
-  logger: getLogger('umzug')
+  logger
 })
 
 module.exports = {

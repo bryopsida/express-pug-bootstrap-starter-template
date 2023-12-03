@@ -36,7 +36,8 @@ async function getUser (userId, includePassword) {
 async function getUsers (offset, count) {
   const users = await db.User.findAll({
     offset,
-    limit: count
+    limit: count,
+    include: db.Role
   })
   return users.map(fromDB)
 }
