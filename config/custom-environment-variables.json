@@ -1,4 +1,8 @@
 {
+  "db": {
+    "dialect": "DB_DIALECT",
+    "storage": "DB_STORAGE"
+  },
   "server": {
     "port": "PORT"
   },

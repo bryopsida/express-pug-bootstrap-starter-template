@@ -1,0 +1,25 @@
+extends layouts/main-layout.pug
+block content
+    br
+    .container
+         div.card
+            div.card-body
+                form.container(action='edit-user?username=' + item.username method='POST')
+                    div.row
+                        label.form-label(for='username') Username
+                        input(class=('form-control') type='text' placeholder='User' aria-label='User' name='username' disabled readonly value=item.username)
+                    br
+                    div.row
+                        label.form-label(for='username') First Name
+                        input(class=('form-control') type='text' placeholder='First Name' aria-label='First Name' name='firstName' value=item.firstName)
+                    br
+                    div.row
+                        label.form-label(for='username') Last Name
+                        input(class=('form-control') type='text' placeholder='Last Name' aria-label='Last Name' name='lastName' value=item.lastName)
+                    br
+                    div.row
+                        label.form-label(for='username') Email
+                        input(class=('form-control') type='text' placeholder='Email' aria-label='Email' name='email' value=item.email)
+                    br
+                    div.row
+                        input.btn.btn-primary(type='submit' value='Save' aria-label='Save')

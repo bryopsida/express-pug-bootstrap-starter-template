@@ -43,12 +43,12 @@ function verifyPassword (password, hash) {
 }
 
 async function authenticate (user, password) {
-  const userObj = getUser(user)
+  const userObj = await getUser(user, true)
   if (userObj == null) throw new Error(`User ${user} does not exist!`)
-  if (userObj.passwordHash == null) {
+  if (userObj.password == null) {
     throw new Error(`User ${user} does not have a password!`)
   }
-  const result = await verifyPassword(password, userObj.passwordHash)
+  const result = await verifyPassword(password, userObj.password)
   if (result) {
     dualLog('info', `User ${user} successfully authenticated`)
   } else {
@@ -63,8 +63,9 @@ async function createSession (req, res, user) {
     cookieName,
     cookieOptions
   })
-  dualLog('info', `Creating session for ${user}`)
-  session.username = user
+  dualLog('info', `Creating session for ${user.username}`)
+  session.username = user.username
+  session.role = user.role
   session.authenticated = true
   await session.save()
 }

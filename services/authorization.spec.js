@@ -8,7 +8,8 @@ describe('services/authorization.js', () => {
         expect(
           authorizationService.isAllowed({
             user: null,
-            originalUrl: '/login'
+            path: '/login',
+            method: 'GET'
           })
         ).toBeTruthy()
       })
@@ -16,9 +17,11 @@ describe('services/authorization.js', () => {
         expect(
           authorizationService.isAllowed({
             user: {
-              username: 'test'
+              username: 'test',
+              role: 'user'
             },
-            originalUrl: '/'
+            method: 'GET',
+            path: '/'
           })
         ).toBeTruthy()
       })
@@ -26,9 +29,11 @@ describe('services/authorization.js', () => {
         expect(
           authorizationService.isAllowed({
             user: {
-              username: 'test'
+              username: 'test',
+              role: 'user'
             },
-            originalUrl: '/about'
+            path: '/about',
+            method: 'GET'
           })
         ).toBeTruthy()
       })
@@ -36,7 +41,8 @@ describe('services/authorization.js', () => {
         expect(
           authorizationService.isAllowed({
             user: {},
-            originalUrl: '/'
+            path: '/',
+            method: 'GET'
           })
         ).toBeFalsy()
       })
@@ -44,7 +50,8 @@ describe('services/authorization.js', () => {
         expect(
           authorizationService.isAllowed({
             user: {},
-            originalUrl: '/about'
+            path: '/about',
+            method: 'GET'
           })
         ).toBeFalsy()
       })

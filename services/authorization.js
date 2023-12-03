@@ -1,26 +1,54 @@
 const { defineAbility } = require('@casl/ability')
 
 const unauthenticatedAbility = defineAbility((can) => {
-  can('visit', '/login')
+  can('get', '/login')
+  can('post', '/login')
 })
 
+function defineAuthenticatedAbilities (can) {
+  can('get', '/login')
+  can('post', '/login')
+  can('get', '/logout')
+  can('get', '/')
+  can('get', '/about')
+  can('get', '/api/users')
+}
+
 const authenticatedAbility = defineAbility((can) => {
-  can('visit', '/login')
-  can('visit', '/logout')
-  can('visit', '/')
-  can('visit', '/about')
+  defineAuthenticatedAbilities(can)
 })
+
+function defineAdminAbilities (can) {
+  can('delete', '/api/users/:username')
+  can('put', '/api/users/:username')
+  can('get', '/api/users/:username')
+  can('get', '/users')
+  can('get', '/edit-user')
+  can('post', '/edit-user')
+}
+
+const adminAbility = defineAbility((can) => {
+  defineAuthenticatedAbilities(can)
+  defineAdminAbilities(can)
+})
+
+const abilitityMap = {
+  user: authenticatedAbility,
+  admin: adminAbility,
+  unauthenticated: unauthenticatedAbility
+}
 
 class AuthorizationService {
   isAllowed (req) {
     if (req.user == null) {
-      req.user = {}
+      req.user = {
+        role: 'unauthenticated'
+      }
     }
     const user = req.user
 
-    const ability =
-      user.username == null ? unauthenticatedAbility : authenticatedAbility
-    const isAllowed = ability.can('visit', req.originalUrl)
+    const ability = abilitityMap[user.role ?? 'unauthenticated']
+    const isAllowed = ability.can(req.method.toLowerCase(), req.path)
     return isAllowed
   }
 }

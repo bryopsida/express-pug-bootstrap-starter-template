@@ -2,7 +2,11 @@ const winston = require('winston')
 
 const logger = winston.createLogger({
   level: 'info',
-  format: winston.format.json(),
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.splat(),
+    winston.format.json()
+  ),
   transports: [
     new winston.transports.File({
       filename: './logs/error.log',
@@ -14,8 +18,21 @@ const logger = winston.createLogger({
 
 const auditLogger = winston.createLogger({
   level: 'silly',
-  format: winston.format.json(),
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.splat(),
+    winston.format.json()
+  ),
   transports: [new winston.transports.File({ filename: './logs/audit.log' })]
+})
+
+const queryLogger = winston.createLogger({
+  level: 'silly',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json()
+  ),
+  transports: [new winston.transports.File({ filename: './logs/query.log' })]
 })
 
 if (process.env.NODE_ENV !== 'production') {
@@ -44,7 +61,12 @@ function getAuditLogger (loggerNameOrMeta) {
   return buildChildLogger(loggerNameOrMeta, auditLogger)
 }
 
+function getQueryLogger (loggerNameOrMeta) {
+  return buildChildLogger(loggerNameOrMeta, queryLogger)
+}
+
 module.exports = {
   getLogger,
-  getAuditLogger
+  getAuditLogger,
+  getQueryLogger
 }

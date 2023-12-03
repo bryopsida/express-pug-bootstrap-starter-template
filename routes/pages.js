@@ -5,6 +5,7 @@ const {
 } = require('../services/authentication')
 const { getLogger } = require('../services/logger')
 const { rateLimit } = require('express-rate-limit')
+const { getUser, getUsers, saveUser } = require('../services/users')
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -69,7 +70,8 @@ module.exports = {
           res.render('login', { title: 'Login Failed', loginError: true })
         } else {
           // user authenticated lets get the session object and persist it to their cookie
-          await createSession(req, res, req.body.username)
+          const user = await getUser(req.body.username)
+          await createSession(req, res, user)
           res.redirect('/')
         }
       } catch (err) {
@@ -90,6 +92,42 @@ module.exports = {
         title: 'About',
         items: buildAboutItems()
       })
+    })
+
+    app.get('/users', async (req, res) => {
+      const offset = req.query.offset < 0 ? 0 : req.query.offset
+      const count = req.query.count > 100 ? 0 : req.query.count
+      const users = await getUsers(offset, count)
+      res.render('users', {
+        user: req.user,
+        title: 'Users',
+        items: users
+      })
+    })
+
+    app.post('/edit-user', async (req, res) => {
+      const username = req.query.username
+      const savedUser = await getUser(username)
+      const updatedUser = req.body
+      savedUser.email = updatedUser.email
+      savedUser.firstName = updatedUser.firstName
+      savedUser.lastName = updatedUser.lastName
+      await saveUser(savedUser)
+      res.redirect('/edit-user?username=' + username)
+    })
+
+    app.get('/edit-user', async (req, res) => {
+      const username = req.query.username
+      const user = await getUser(username)
+      if (user == null) {
+        res.render('404')
+      } else {
+        res.render('edit-user', {
+          user: req.user,
+          title: 'Edit User',
+          item: user
+        })
+      }
     })
   }
 }
