@@ -6,7 +6,7 @@ function fromDB (user, includePassword) {
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
-    role: user.Role.role
+    role: user.Role?.role
   }
   if (includePassword) {
     retUser.password = user.password
@@ -25,15 +25,32 @@ function toDTO (user) {
 }
 
 async function saveUser (userObj) {
-  const modelInstance = await db.User.findOne({ username: userObj.username })
+  const modelInstance = await db.User.findOne({
+    where: {
+      username: userObj.username
+    }
+  })
   modelInstance.firstName = userObj.firstName
   modelInstance.lastName = userObj.lastName
   modelInstance.email = userObj.email
   await modelInstance.save()
 }
 
+async function deleteUser (username) {
+  const modelInstance = await db.User.findOne({
+    where: {
+      username
+    }
+  })
+  await modelInstance.destroy()
+}
+
 async function updatePassword (username, hash) {
-  const modelInstance = await db.User.findOne({ username })
+  const modelInstance = await db.User.findOne({
+    where: {
+      username
+    }
+  })
   modelInstance.password = hash
   await modelInstance.save()
 }
@@ -58,6 +75,17 @@ async function getUsers (offset, count) {
   return users.map(fromDB)
 }
 
+async function addUser (userObj) {
+  const role = await db.Role.findOne({
+    where: {
+      role: userObj.role
+    }
+  })
+  userObj.roleId = role.id
+  const user = db.User.build(userObj)
+  await user.save()
+}
+
 function getUserCount () {
   return db.User.count()
 }
@@ -68,5 +96,7 @@ module.exports = {
   getUserCount,
   toDTO,
   saveUser,
-  updatePassword
+  updatePassword,
+  addUser,
+  deleteUser
 }

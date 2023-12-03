@@ -1,17 +1,9 @@
 const { authenticate, hashPassword } = require('../../services/authentication')
+const { getAuditLogger } = require('../../services/logger')
 const { getUser, updatePassword } = require('../../services/users')
+const { passwordMeetsRequirements } = require('../../services/passwordPolicy')
 
-const passwordComplexity = require('joi-password-complexity')
-
-const complexityOptions = {
-  min: 10,
-  max: 30,
-  lowerCase: 1,
-  upperCase: 1,
-  numeric: 1,
-  symbol: 1,
-  requirementCount: 2
-}
+const logger = getAuditLogger('change-password')
 
 module.exports = {
   registerChangePasswordPage: function registerChangePasswordPage (app) {
@@ -34,8 +26,7 @@ module.exports = {
         currentPasswordErrorMessage =
           'You must provide a valid current password'
       }
-      const validationResult =
-        passwordComplexity(complexityOptions).validate(newPasswordValue)
+      const validationResult = passwordMeetsRequirements(newPasswordValue)
       if (validationResult.error) {
         newPasswordError = true
         newPasswordErrorMessage = validationResult.error.message
@@ -64,6 +55,7 @@ module.exports = {
       } else {
         const hash = await hashPassword(newPasswordValue)
         await updatePassword(username, hash)
+        logger.info(`User ${req.user.username} changed their password`)
         res.redirect('/')
       }
     })

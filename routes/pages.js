@@ -5,6 +5,8 @@ const { registerHomePage } = require('./pages/home')
 const { registerLoginPage } = require('./pages/login')
 const { registerLogoutPage } = require('./pages/logout')
 const { registerUsersPage } = require('./pages/users')
+const { registerAddUserPage } = require('./pages/add-user')
+const { registerDeleteUserPage } = require('./pages/delete-user')
 
 module.exports = {
   registerPageRoutes: function registerPageRoutes (app) {
@@ -15,5 +17,7 @@ module.exports = {
     registerLoginPage(app)
     registerLogoutPage(app)
     registerUsersPage(app)
+    registerAddUserPage(app)
+    registerDeleteUserPage(app)
   }
 }
