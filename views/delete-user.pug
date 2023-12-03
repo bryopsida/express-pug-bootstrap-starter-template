@@ -1,0 +1,11 @@
+extends layouts/main-layout.pug
+block content
+    br
+    .container
+         div.card
+            div.card-body
+                form.container(action='delete-user?username=' + item.username method='POST')
+                        div.row Confirm you wish to delete #{item.username}
+                        br
+                        div.row
+                            input.btn.btn-primary(type='submit' value='Delete User' aria-label='Delete User')

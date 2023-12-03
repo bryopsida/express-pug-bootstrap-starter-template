@@ -13,13 +13,19 @@ block content
                             th(scope="col") Role
                             th(scope="col") Actions
                     tbody
-                        each user in items
+                        each item in items
                             tr
-                                th(scope="row") #{user.username}
-                                th #{user.firstName}
-                                th #{user.lastName}
-                                th #{user.role}
+                                th(scope="row") #{item.username}
+                                th #{item.firstName}
+                                th #{item.lastName}
+                                th #{item.role}
                                 th
                                     div.btn-group
-                                        a.btn.btn-primary(href='/edit-user?username=' + user.username)
-                                            i.bi.bi-pen-fill(data-bs-toggle="tooltip" data-bs-placement="top" title="Edit " + user.username)
+                                        a.btn.btn-primary(href='/edit-user?username=' + item.username)
+                                            i.bi.bi-pen-fill(data-bs-toggle="tooltip" data-bs-placement="top" title="Edit " + item.username)
+                                        if item.username !== user.username
+                                            a.btn.btn-primary(href='/delete-user?username=' + item.username)
+                                                i.bi.bi-person-dash-fill(data-bs-toggle="tooltip" data-bs-placement="top" title="Delete " + item.username)
+        br
+        a.btn.btn-primary(href='/add-user')
+            i.bi.bi-person-add(data-bs-toggle="tooltip" data-bs-placement="top" title="Add Users")  &nbsp; Add User

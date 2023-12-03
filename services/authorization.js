@@ -12,6 +12,8 @@ function defineAuthenticatedAbilities (can) {
   can('get', '/')
   can('get', '/about')
   can('get', '/api/users')
+  can('get', '/change-password')
+  can('post', '/change-password')
 }
 
 const authenticatedAbility = defineAbility((can) => {
@@ -25,6 +27,10 @@ function defineAdminAbilities (can) {
   can('get', '/users')
   can('get', '/edit-user')
   can('post', '/edit-user')
+  can('get', '/add-user')
+  can('post', '/add-user')
+  can('get', '/delete-user')
+  can('post', '/delete-user')
 }
 
 const adminAbility = defineAbility((can) => {

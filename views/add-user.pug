@@ -1,0 +1,52 @@
+extends layouts/main-layout.pug
+block content
+    br
+    .container
+         div.card
+            div.card-body
+                form.container(action='add-user' method='POST')
+                    div.row
+                        label.form-label(for='username') Username
+                        input(class=(usernameError == false ? 'form-control' : 'form-control  is-invalid') value=usernameValue type='text' placeholder='Username' aria-label='Username' name='username' required)
+                        if usernameError
+                            div.invalid-feedback(id='usernameFeedback') #{usernameErrorMessage}
+                    br
+                    div.row
+                        label.form-label(for='firstName') First Name
+                        input(class=(firstNameError == false ? 'form-control' : 'form-control  is-invalid') value=firstNameValue type='text' placeholder='First Name' aria-label='First Name' name='firstName')
+                        if firstNameError
+                            div.invalid-feedback(id='firstNameFeedback') #{firstNameErrorMessage}
+                    br
+                    div.row
+                        label.form-label(for='lastName') Last Name
+                        input(class=(lastNameError == false ? 'form-control' : 'form-control  is-invalid') value=lastNameValue type='text' placeholder='Last Name' aria-label='Last Name' name='lastName')
+                        if lastNameError
+                            div.invalid-feedback(id='lastNameFeedback') #{lastNameErrorMessage}
+                    br
+                    div.row
+                        label.form-label(for='role') Role
+                        select.form-control(name='role', id='role', aria-label='Role')
+                            option Admin
+                            option User
+                            option Viewer
+                    br
+                    div.row
+                        label.form-label(for='email') Email
+                        input(class=(emailError == false ? 'form-control' : 'form-control  is-invalid') value=emailValue type='email' placeholder='Email' aria-label='Email' name='email')
+                        if emailError
+                            div.invalid-feedback(id='emailFeedback') #{emailErrorMessage}
+                    br
+                    div.row
+                        label.form-label(for='password') Password
+                        input(class=(passwordError == false ? 'form-control' : 'form-control  is-invalid') value=passwordValue type='password' placeholder='Password' aria-label='Password' name='password' required)
+                        if passwordError
+                            div.invalid-feedback(id='passwordFeedback') #{passwordErrorMessage}
+                    br
+                    div.row
+                        label.form-label(for='confirmPassword') Confirm Password
+                        input(class=(confirmPasswordError == false ? 'form-control' : 'form-control  is-invalid') value=confirmPasswordValue type='password' placeholder='Confirm Password' aria-label='Confirm Password' name='confirmPassword' required)
+                        if confirmPasswordError
+                            div.invalid-feedback(id='confirmPasswordFeedback') #{confirmPasswordErrorMessage}
+                    br
+                    div.row
+                        input.btn.btn-primary(type='submit' value='Add User' aria-label='Add User')
