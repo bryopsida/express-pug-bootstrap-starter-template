@@ -5,9 +5,17 @@ const { passwordMeetsRequirements } = require('../../services/passwordPolicy')
 
 const logger = getAuditLogger('change-password')
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  handler: (req, res, next, options) => res.render('429')
+})
+
 module.exports = {
   registerChangePasswordPage: function registerChangePasswordPage (app) {
-    app.post('/change-password', async (req, res) => {
+    app.post('/change-password', limiter, async (req, res) => {
       const username = req.user.username
       const user = await getUser(username)
       // check error conditions first
