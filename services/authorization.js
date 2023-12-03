@@ -22,6 +22,7 @@ function defineAdminAbilities (can) {
   can('delete', '/api/users/:username')
   can('put', '/api/users/:username')
   can('get', '/api/users/:username')
+  can('get', '/users')
 }
 
 const adminAbility = defineAbility((can) => {

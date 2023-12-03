@@ -24,6 +24,13 @@ header
                                 href="/about" 
                                 aria-current="page"
                                 ) About
+                        if user
+                            if user.role === 'admin'
+                                li.nav-item
+                                    a.nav-link(
+                                        href="/users" 
+                                        aria-current="page"
+                                        ) Users
                         li.nav-item.dropdown.d-flex
                             a.nav-link.dropdown-toggle(href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false')
                                 i.bi.bi-person-circle

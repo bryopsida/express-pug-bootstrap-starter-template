@@ -5,7 +5,7 @@ const {
 } = require('../services/authentication')
 const { getLogger } = require('../services/logger')
 const { rateLimit } = require('express-rate-limit')
-const { getUser } = require('../services/users')
+const { getUser, getUsers } = require('../services/users')
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -91,6 +91,16 @@ module.exports = {
         user: req.user,
         title: 'About',
         items: buildAboutItems()
+      })
+    })
+    app.get('/users', async (req, res) => {
+      const offset = req.query.offset < 0 ? 0 : req.query.offset
+      const count = req.query.count > 100 ? 0 : req.query.count
+      const users = await getUsers(offset, count)
+      res.render('users', {
+        user: req.user,
+        title: 'Users',
+        items: users
       })
     })
   }

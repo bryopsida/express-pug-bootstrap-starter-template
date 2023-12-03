@@ -2,6 +2,7 @@ const db = require('../db/db')
 
 function fromDB (user, includePassword) {
   const retUser = {
+    username: user.username,
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
@@ -15,6 +16,7 @@ function fromDB (user, includePassword) {
 
 function toDTO (user) {
   return {
+    username: user.username,
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,

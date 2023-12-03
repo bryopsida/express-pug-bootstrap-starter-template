@@ -5,7 +5,6 @@ const validator = require('express-joi-validation').createValidator({})
 
 const getUsersQuerySchema = Joi.object({
   offset: Joi.number().integer().min(0).required(),
-
   count: Joi.number().integer().min(1).max(100).required()
 })
 
