@@ -42,7 +42,7 @@
     "prettier": "3.2.5",
     "sequelize-cli": "^6.6.2",
     "standard": "^17.1.0",
-    "supertest": "^6.3.3"
+    "supertest": "^7.0.0"
   },
   "standard": {
     "env": [
