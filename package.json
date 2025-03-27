@@ -16,7 +16,7 @@
   "dependencies": {
     "@casl/ability": "^6.5.0",
     "argon2": "^0.41.0",
-    "body-parser": "^1.20.2",
+    "body-parser": "^2.0.0",
     "bootstrap": "^5.3.2",
     "bootstrap-icons": "^1.11.2",
     "config": "^3.3.9",
