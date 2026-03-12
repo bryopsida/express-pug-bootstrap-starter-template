@@ -30,7 +30,7 @@
     "joi-password-complexity": "^5.2.0",
     "pug": "^3.0.2",
     "sequelize": "^6.35.1",
-    "sqlite3": "^5.1.6",
+    "sqlite3": "^6.0.0",
     "umzug": "^3.4.0",
     "winston": "^3.11.0"
   },
